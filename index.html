@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SPHERE</title>
+</head>
+
+<body>
+    <h1>test</h1>
+
+    <div>
+	    {{range .}}
+	    	<ul>
+	    		{{.Id}}
+	    		{{.Name}}
+	    	</ul>
+	    {{end}}
+    </div>
+
+    <div>
+    	<label> SUP <label>
+	    <form method="POST" action="/">
+	        <input type="text" name="userInput" placeholder="hey man">
+	        <input type="submit" value="SUBMIT">
+	    </form>
+    <div>
+</body>
+</html>
