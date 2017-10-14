@@ -31,8 +31,6 @@ func home(res http.ResponseWriter, req *http.Request) {
 			name string
 		)
 
-		log.Println(data)
-
 		rows, err := db.Query("select id, name from food")
 		handleError(err)
 		defer rows.Close()
