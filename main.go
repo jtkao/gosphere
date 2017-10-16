@@ -13,7 +13,7 @@ var (
 	err error
 )
 
-type FoodItem struct {
+type Card struct {
 	Id int
 	Name string
 }
@@ -24,10 +24,10 @@ func home(res http.ResponseWriter, req *http.Request) {
 	defer db.Close()
 
 	if req.Method != "POST" {
-		var data []FoodItem
-		var row FoodItem
+		var data []Card
+		var row Card
 
-		rows, err := db.Query("select id, name from food")
+		rows, err := db.Query("select id, name from wishlist")
 		handleError(err)
 		defer rows.Close()
 
@@ -46,10 +46,10 @@ func home(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	
-	formInput := req.FormValue("userInput")
+	formInput := req.FormValue("newCard")
 	log.Println("form input: ", formInput)
 
-	query, err := db.Prepare("INSERT food SET name=?")
+	query, err := db.Prepare("INSERT wishlist SET name=?")
 	handleError(err)
 
 	result, err := query.Exec(formInput)
@@ -58,7 +58,7 @@ func home(res http.ResponseWriter, req *http.Request) {
 	id, err := result.LastInsertId()
 	handleError(err)
 
-	log.Println("new entry in food row id#", id)
+	log.Println("new entry in wishlist row id#", id)
 	
 	http.Redirect(res, req, "/", 301)
 
