@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 	"net/http"
+	"html/template"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
-	"html/template"
 )
 
 var (
@@ -23,21 +23,17 @@ func home(res http.ResponseWriter, req *http.Request) {
 	handleError(err)
 	defer db.Close()
 
-	var data []FoodItem
-
 	if req.Method != "POST" {
-		var (
-			id int
-			name string
-		)
+		var data []FoodItem
+		var row FoodItem
 
 		rows, err := db.Query("select id, name from food")
 		handleError(err)
 		defer rows.Close()
 
 		for rows.Next() {
-			err := rows.Scan(&id, &name)
-			data = append(data, FoodItem{id, name})
+			err := rows.Scan(&row.Id, &row.Name)
+			data = append(data, row)
 			handleError(err)
 		}
 
@@ -51,7 +47,18 @@ func home(res http.ResponseWriter, req *http.Request) {
 	}
 	
 	formInput := req.FormValue("userInput")
-	log.Println(formInput)
+	log.Println("form input: ", formInput)
+
+	query, err := db.Prepare("INSERT food SET name=?")
+	handleError(err)
+
+	result, err := query.Exec(formInput)
+	handleError(err)
+
+	id, err := result.LastInsertId()
+	handleError(err)
+
+	log.Println("new entry in food row id#", id)
 	
 	http.Redirect(res, req, "/", 301)
 
@@ -68,4 +75,3 @@ func handleError(err error) {
 		log.Fatal(err)
 	}
 }
-
