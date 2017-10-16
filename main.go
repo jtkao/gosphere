@@ -19,21 +19,22 @@ type Card struct {
 }
 
 func home(res http.ResponseWriter, req *http.Request) {
+	// insert password for root 
 	db, err := sql.Open("mysql", "root:sdfccsdfcc@(127.0.0.1:3306)/sphere")
 	handleError(err)
 	defer db.Close()
 
 	if req.Method != "POST" {
 		var data []Card
-		var row Card
+		var card Card
 
 		rows, err := db.Query("select id, name from wishlist")
 		handleError(err)
 		defer rows.Close()
 
 		for rows.Next() {
-			err := rows.Scan(&row.Id, &row.Name)
-			data = append(data, row)
+			err := rows.Scan(&card.Id, &card.Name)
+			data = append(data, card)
 			handleError(err)
 		}
 
@@ -65,7 +66,6 @@ func home(res http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-
 	http.HandleFunc("/", home)
 	http.ListenAndServe(":4200", nil)
 }

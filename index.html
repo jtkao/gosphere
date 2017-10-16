@@ -4,7 +4,15 @@
     <title>SPHERE</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
+
+<style>
+  #wishlist {
+    height: 300px;
+    overflow: auto;
+  }
+</style>
 
 <body>
 	<div class="container-fluid text-center mt-5">
@@ -17,7 +25,7 @@
     		<div class="col"></div>
 	    		<div class="col">
 	    			<div class="card">
-	    				<div class="card-body">
+	    				<div class="card-body" id="wishlist">
 						    {{range .}}
 						    	<li class="list-group-item">
 						    		<span class="badge badge-secondary">{{.Id}}</span>
@@ -28,7 +36,7 @@
 				    	<div class="card-footer">
 				    		<form method="POST" action="/" class="form-inline">
 	        					<input type="text" name="newCard" class="form-control">
-	        					<input type="submit" value="submit" class="btn btn-primary ml-1">
+	        					<input type="submit" value="submit" class="btn btn-default ml-1">
 	    					</form>
 				    	</div>
 					</div>
