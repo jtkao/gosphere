@@ -2,25 +2,34 @@
 <html>
 <head>
     <title>SPHERE</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 </head>
 
 <body>
-    <h1>MEXICAN FOOD</h1>
-
-    <div>
-	    {{range .}}
-	    	<ul>
-	    		{{.Name}}
-	    	</ul>
-	    {{end}}
+    <div class="container-fluid mt-5">
+    	<div class="row">
+    		<div class="col"></div>
+	    		<div class="col">
+	    			<div class="card">
+	    				<div class="card-body">
+						    {{range .}}
+						    	<li class="list-group-item">
+						    		<span class="badge badge-primary">{{.Id}}</span>
+						    		{{.Name}}
+						    	</li>
+						    {{end}}
+				    	</div>
+				    	<div class="card-footer">
+				    		<form method="POST" action="/" class="form-inline">
+	        					<input type="text" name="userInput" class="form-control" placeholder="create a new food">
+	        					<input type="submit" value="submit" class="btn btn-primary">
+	    					</form>
+				    	</div>
+					</div>
+				</div>
+	    	<div class="col"></div>
+		</div>
     </div>
-
-    <div>
-    	<label> SUP <label>
-	    <form method="POST" action="/">
-	        <input type="text" name="userInput" placeholder="hey man">
-	        <input type="submit" value="SUBMIT">
-	    </form>
-    <div>
 </body>
 </html>
